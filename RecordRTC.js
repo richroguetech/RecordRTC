@@ -1915,7 +1915,9 @@ function getSeekableBlob(inputBlob, callback) {
 
     var fileReader = new FileReader();
     fileReader.onload = function(e) {
-        var ebmlElms = decoder.decode(this.result);
+        let ebmlElms = decoder.decode(this.result);
+        const validEmlType = ['m', 'u', 'i', 'f', 's', '8', 'b', 'd']
+        ebmlElms = ebmlElms?.filter((elm) => validEmlType.includes(elm.type))
         ebmlElms.forEach(function(element) {
             reader.read(element);
         });
